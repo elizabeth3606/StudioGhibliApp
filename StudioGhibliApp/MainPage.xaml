@@ -1,0 +1,25 @@
+﻿<Page
+    x:Class="StudioGhibliApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StudioGhibliApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <WebView x:Name="wvMain" Margin="0,116,368,0"/>
+        <Button x:Name="btnHome" Content="⌂" Margin="40,32,0,0" VerticalAlignment="Top" Height="64" Width="91" FontFamily="Bahnschrift SemiBold" FontSize="35" BorderThickness="1,1,1,1" RequestedTheme="Default" BackgroundSizing="OuterBorderEdge" Foreground="#FFFA59FE" FontStyle="Normal" Click="btnHome_Click">
+            <Button.Background>
+                <SolidColorBrush Color="#FFF6DAF7" Opacity="0.97"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="btnBack" Content="&lt;" Margin="136,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.513,0.901" Height="64" Width="77" FontSize="35" FontStyle="Normal" FontWeight="Black" FontFamily="Tahoma" Background="#FFFA59FE" Foreground="#FFF6DAF7" Click="btnBack_Click"/>
+        <Button x:Name="btnFore" Content="&gt;" Margin="218,32,0,0" VerticalAlignment="Top" Height="64" Width="79" FontFamily="Tahoma" FontSize="35" Background="#FFFA59FE" Foreground="#FFF6DAF7" FontWeight="Bold" Click="btnFore_Click"/>
+        <Button x:Name="btnSearch" Content="⌕" Margin="302,32,0,0" VerticalAlignment="Top" Height="64" Background="#FFFD92CA" FontSize="40" Width="56" Foreground="White" Click="btnSearch_Click"/>
+        <ListView HorizontalAlignment="Left" Width="363" Margin="1557,179,0,0"/>
+        <Button x:Name="btnAdd" Content="+" Margin="1557,116,0,0" VerticalAlignment="Top" Height="58" Width="58"/>
+
+    </Grid>
+</Page>
