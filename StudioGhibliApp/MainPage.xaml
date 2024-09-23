@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <WebView x:Name="wvMain" Margin="0,116,1028,0"/>
+        <WebView x:Name="wvMain" Margin="0,116,363,0"/>
         <Button x:Name="btnHome" Content="⌂" Margin="40,32,0,0" VerticalAlignment="Top" Height="64" Width="91" FontFamily="Bahnschrift SemiBold" FontSize="35" BorderThickness="1,1,1,1" RequestedTheme="Default" BackgroundSizing="OuterBorderEdge" Foreground="Black" FontStyle="Normal" Click="btnHome_Click">
             <Button.Background>
                 <SolidColorBrush Color="White" Opacity="0.97"/>
@@ -18,14 +18,14 @@
         <Button x:Name="btnBack" Content="&lt;" Margin="136,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.513,0.901" Height="64" Width="77" FontSize="35" FontStyle="Normal" FontWeight="Black" FontFamily="Tahoma" Background="White" Foreground="Black" Click="btnBack_Click"/>
         <Button x:Name="btnFore" Content="&gt;" Margin="218,32,0,0" VerticalAlignment="Top" Height="64" Width="79" FontFamily="Tahoma" FontSize="35" Background="White" Foreground="Black" FontWeight="Bold" Click="btnFore_Click"/>
         <Button x:Name="btnSearch" Content="⌕" Margin="302,32,0,0" VerticalAlignment="Top" Height="64" Background="White" FontSize="40" Width="56" Foreground="Black" Click="btnSearch_Click"/>
-        <ListView HorizontalAlignment="Left" Width="363" Margin="902,179,0,0"/>
-        <Button x:Name="btnAdd" Content="+" Margin="902,116,0,0" VerticalAlignment="Top" Height="58" Width="58" FontWeight="Bold" FontSize="35" Background="#339E9E9E"/>
-        <Grid x:Name="gridFavorites" Margin="897,179,665,0">
+        <ListView HorizontalAlignment="Left" Width="363" Margin="1557,179,0,0"/>
+        <Button x:Name="btnAdd" Content="+" Margin="1557,116,0,0" VerticalAlignment="Top" Height="58" Width="58" FontWeight="Bold" FontSize="35" Background="#339E9E9E" Click="btnAdd_Click"/>
+        <Grid x:Name="gridFavorites" Margin="1552,179,10,0">
             <Button x:Name="btnFavoriteBase" Content="Button" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.29,-1.312" Height="65" Width="338" Background="#338B8B8B" Grid.ColumnSpan="2" FontSize="25"/>
         </Grid>
-        <Button x:Name="btnFavorite" Content="Button" Margin="1033,116,0,0" VerticalAlignment="Top" Height="58" Width="222" Background="#33FFFFFF" Foreground="White" Click="btnFavorite_Click"/>
-        <TextBox x:Name="tbFavorite" HorizontalAlignment="Left" Margin="960,116,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="64" Width="295" FontSize="35" FontWeight="Bold"/>
-        <TextBox x:Name="tbFavoriteRemove" HorizontalAlignment="Left" Margin="960,116,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="62" Width="295" FontSize="35" FontWeight="Bold"/>
+        <Button x:Name="btnFavorite" Content="Button" Margin="1688,116,0,0" VerticalAlignment="Top" Height="58" Width="222" Background="#33FFFFFF" Foreground="White" Click="btnFavorite_Click"/>
+        <TextBox x:Name="tbFavorite" HorizontalAlignment="Left" Margin="1615,116,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="64" Width="295" FontSize="35" FontWeight="Bold" KeyUp="tbFavorite_KeyUp"/>
+        <TextBox x:Name="tbFavoriteRemove" HorizontalAlignment="Left" Margin="1615,116,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="62" Width="295" FontSize="35" FontWeight="Bold" KeyUp="tbFavoriteRemove_KeyUp"/>
 
     </Grid>
 </Page>
