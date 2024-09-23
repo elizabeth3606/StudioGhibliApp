@@ -38,7 +38,6 @@ namespace StudioGhibliApp
             tbFavoriteRemove.Visibility = Visibility.Collapsed;
             /*btnFavoriteRemove.Visibility = Visibility.Collapsed;
             btnFavoriteRemove.Visibility = Visibility.Collapsed;*/
-
         }
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
@@ -271,6 +270,11 @@ namespace StudioGhibliApp
     }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
 
         }
