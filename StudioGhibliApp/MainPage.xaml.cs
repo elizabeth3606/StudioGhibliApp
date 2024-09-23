@@ -43,6 +43,7 @@ namespace StudioGhibliApp
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
+            
             ContentDialog dialog = new ContentDialog
             {
                 Title = "Home Button",
@@ -50,15 +51,15 @@ namespace StudioGhibliApp
                 CloseButtonText = "OK"
             };
 
-            /*dialog.ShowAsync();*/
+            dialog.ShowAsync();
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             // Navigate back to the previous page
-            if (Frame.CanGoBack)
+            if (wvMain.CanGoBack)
             {
-                Frame.GoBack();
+                wvMain.GoBack();
             }
             else
             {
@@ -70,7 +71,7 @@ namespace StudioGhibliApp
                     CloseButtonText = "OK"
                 };
 
-                _ = dialog.ShowAsync();
+                dialog.ShowAsync();
             }
         }
 
@@ -98,7 +99,9 @@ namespace StudioGhibliApp
         private String FixText(String text)
         {
             String textLower = text.ToLower();
-            if (textLower.StartsWith("https://") && !textLower.StartsWith("https://www."))
+            text = textLower.Replace(" ", "-");
+            string url = "https://www.ghiblicollection.com/products/" + text;
+            /*if (textLower.StartsWith("https://") && !textLower.StartsWith("https://www."))
             {
                 text = text.Substring(0, 8) + "www." + text.Substring(8);
             }
@@ -115,9 +118,9 @@ namespace StudioGhibliApp
             if (!textLower.EndsWith(".org") && !textLower.EndsWith(".com"))
             {
                 text = text + ".com";
-            }
+            }*/
 
-            return text;
+            return url;
         }
 
         // creates a new favorite button
@@ -171,14 +174,14 @@ namespace StudioGhibliApp
             tbFavorite.SelectAll();
             tbFavorite.Focus(FocusState.Programmatic);
         }
-        private void btnFavoriteRemove_Click(object sender, RoutedEventArgs e)
+        /*private void btnFavoriteRemove_Click(object sender, RoutedEventArgs e)
         {
             // reset the favorite textbox to it's default state
             tbFavoriteRemove.Text = "<Enter A Favorite Name>";
             tbFavoriteRemove.Visibility = Visibility.Visible;
             tbFavoriteRemove.SelectAll();
             tbFavoriteRemove.Focus(FocusState.Programmatic);
-        }
+        }*/
 
         private void tbFavoriteRemove_KeyUp(object sender, KeyRoutedEventArgs e)
         {
@@ -249,9 +252,9 @@ namespace StudioGhibliApp
 
          private void btnFore_Click(object sender, RoutedEventArgs e)
         {
-            if (Frame.CanGoForward)
+            if (wvMain.CanGoForward)
             {
-                Frame.GoForward();
+                wvMain.GoForward();
             }
             else
             {
