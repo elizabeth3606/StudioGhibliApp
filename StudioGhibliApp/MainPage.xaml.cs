@@ -165,6 +165,7 @@ namespace StudioGhibliApp
         {
             String url = ((Button)sender).Tag.ToString();
             wvMain.Navigate(new Uri(url));
+            tbSearch.Text = url;
         }
         private void btnFavorite_Click(object sender, RoutedEventArgs e)
         {
