@@ -25,6 +25,7 @@ namespace StudioGhibliApp
         private static int separation = 10;
         // the number of favorites buttons i've added
         private int faveCount;
+        private String stringUrl;
 
         public MainPage()
         {
@@ -118,7 +119,7 @@ namespace StudioGhibliApp
             {
                 text = text + ".com";
             }*/
-
+            this.stringUrl = url;
             return url;
         }
 
@@ -267,16 +268,17 @@ namespace StudioGhibliApp
 
                 _ = dialog.ShowAsync();
             }
-    }
+        }
 
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void tbSearch_SelectionChanged(object sender, RoutedEventArgs e)
         {
-
+            tbSearch.Text = this.stringUrl;
         }
 
         /*private void tbFavoriteRemove_TextChanged(object sender, TextChangedEventArgs e)
