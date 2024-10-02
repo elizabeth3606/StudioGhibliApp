@@ -39,8 +39,8 @@
         </Button>
         <ListView HorizontalAlignment="Right" Width="363" Margin="1546,183,0,-4" VerticalAlignment="Top"/>
 
-        <TextBox x:Name="tbFavorite" HorizontalAlignment="Right" Margin="1614,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="64" Width="295" FontSize="25" FontWeight="Bold" KeyUp="tbFavorite_KeyUp"/>
-        <TextBox x:Name="tbFavoriteRemove" HorizontalAlignment="Right" Margin="1615,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="62" Width="295" FontSize="25" FontWeight="Bold" KeyUp="tbFavoriteRemove_KeyUp"/>
+        <TextBox x:Name="tbFavorite" HorizontalAlignment="Right" Margin="0,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="64" Width="358" FontSize="25" FontWeight="Bold" KeyUp="tbFavorite_KeyUp"/>
+        <TextBox x:Name="tbFavoriteRemove" HorizontalAlignment="Right" Margin="0,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="62" Width="358" FontSize="25" FontWeight="Bold" KeyUp="tbFavoriteRemove_KeyUp"/>
     </Grid>
 
 </Page>
