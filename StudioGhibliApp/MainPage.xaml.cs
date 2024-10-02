@@ -51,7 +51,9 @@ namespace StudioGhibliApp
                 CloseButtonText = "OK"
             };
 
-            dialog.ShowAsync();
+            /*dialog.ShowAsync();*/
+            tblWelcome.Visibility = Visibility.Visible;
+            wvMain.Visibility = Visibility.Collapsed; 
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -166,6 +168,7 @@ namespace StudioGhibliApp
             String url = ((Button)sender).Tag.ToString();
             wvMain.Navigate(new Uri(url));
             tbSearch.Text = url;
+            wvMain.Visibility = Visibility.Visible;
             btnFavorite.Content = "♥︎";
             tblWelcome.Visibility = Visibility.Collapsed;
         }
