@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 
-    <Grid Background="MintCream">
+    <Grid Background="MintCream" HorizontalAlignment="Stretch">
         <WebView x:Name="wvMain" Margin="-10,117,373,-1"/>
         <Button x:Name="btnHome" Content="⌂" Margin="40,32,0,0" VerticalAlignment="Top" Height="64" Width="91" FontFamily="Bahnschrift SemiBold" FontSize="35" BorderThickness="1,1,1,1" RequestedTheme="Default" BackgroundSizing="OuterBorderEdge" Foreground="Black" FontStyle="Normal" Click="btnHome_Click">
             <Button.Background>
@@ -19,25 +19,27 @@
         <Button x:Name="btnBack" Content="&lt;" Margin="136,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.513,0.901" Height="64" Width="77" FontSize="35" FontStyle="Normal" FontWeight="Black" FontFamily="Tahoma" Background="White" Foreground="Black" Click="btnBack_Click"/>
         <Button x:Name="btnFore" Content="&gt;" Margin="218,32,0,0" VerticalAlignment="Top" Height="64" Width="79" FontFamily="Tahoma" FontSize="35" Background="White" Foreground="Black" FontWeight="Bold" Click="btnFore_Click"/>
         <Button x:Name="btnSearch" Content="⌕" Margin="302,32,0,0" VerticalAlignment="Top" Height="64" Background="White" FontSize="40" Width="56" Foreground="Black"/>
-        <ListView HorizontalAlignment="Left" Width="363" Margin="1546,183,0,-4"/>
+       
 
+        <TextBlock x:Name="tblWelcome" Text="Welcome to the Studio Ghibli App" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Foreground="#FF3B6AF1"/>
+        <TextBlock x:Name="tbSearch" HorizontalAlignment="Left" Margin="378,39,0,0" TextWrapping="Wrap" Text="Search..." VerticalAlignment="Top" Height="32" Width="1184" SelectionChanged="tbSearch_SelectionChanged" FontFamily="Tahoma" FontWeight="Bold" FontSize="25"/>
+        <Grid x:Name="gridAllFavorites" Margin="1546,114,0,0"/>
         <Grid x:Name="gridFavorites" Margin="1552,183,11,805">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="16*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnFavoriteBase" Content="Enter a Favorite..." Margin="10,0,0,0" RenderTransformOrigin="0.29,-1.312" Height="65" Width="352" Background="#331144D6" FontSize="25" Grid.ColumnSpan="2"/>
-        </Grid>
-        <Button x:Name="btnFavorite" Content="+" Margin="1847,114,0,0" VerticalAlignment="Top" Height="58" Width="63" Foreground="#FF3B6AF1" Click="btnFavorite_Click" FontSize="35">
+            <Button x:Name="btnFavoriteBase" Content="Enter a Favorite..." Margin="10,0,0,0" RenderTransformOrigin="0.29,-1.312" Height="65" Width="352" Background="#331144D6" FontSize="25" Grid.ColumnSpan="2" HorizontalAlignment="Right"/>
+            </Grid>
+        <Button x:Name="btnFavorite" Content="♡" Margin="1847,114,0,0" VerticalAlignment="Top" Height="58" Width="63" Foreground="#FF3B6AF1" Click="btnFavorite_Click" FontSize="35" HorizontalAlignment="Right">
             <Button.Background>
                 <SolidColorBrush Color="#FF803030" Opacity="0"/>
             </Button.Background>
-        </Button>
-        <TextBox x:Name="tbFavorite" HorizontalAlignment="Left" Margin="1915,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="64" Width="295" FontSize="25" FontWeight="Bold" KeyUp="tbFavorite_KeyUp"/>
-        <TextBox x:Name="tbFavoriteRemove" HorizontalAlignment="Left" Margin="1615,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="62" Width="295" FontSize="25" FontWeight="Bold" KeyUp="tbFavoriteRemove_KeyUp"/>
-        <TextBlock x:Name="tblWelcome" Text="Welcome to the Studio Ghibli App" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Foreground="#FF3B6AF1"/>
-        <TextBlock x:Name="tbSearch" HorizontalAlignment="Left" Margin="378,39,0,0" TextWrapping="Wrap" Text="Search..." VerticalAlignment="Top" Height="32" Width="1184" SelectionChanged="tbSearch_SelectionChanged" FontFamily="Tahoma" FontWeight="Bold" FontSize="25"/>
+        </Button> 
+        <ListView HorizontalAlignment="Right" Width="363" Margin="1546,183,0,-4"/>
 
+        <TextBox x:Name="tbFavorite" HorizontalAlignment="Right" Margin="1614,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="64" Width="295" FontSize="25" FontWeight="Bold" KeyUp="tbFavorite_KeyUp"/>
+        <TextBox x:Name="tbFavoriteRemove" HorizontalAlignment="Right" Margin="1615,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="62" Width="295" FontSize="25" FontWeight="Bold" KeyUp="tbFavoriteRemove_KeyUp"/>
     </Grid>
 
 </Page>

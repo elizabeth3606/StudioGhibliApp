@@ -166,6 +166,8 @@ namespace StudioGhibliApp
             String url = ((Button)sender).Tag.ToString();
             wvMain.Navigate(new Uri(url));
             tbSearch.Text = url;
+            btnFavorite.Content = "♥︎";
+            tblWelcome.Visibility = Visibility.Collapsed;
         }
         private void btnFavorite_Click(object sender, RoutedEventArgs e)
         {
