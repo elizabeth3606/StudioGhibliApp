@@ -9,6 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 
+
     <Grid Background="MintCream" HorizontalAlignment="Stretch">
         <WebView x:Name="wvMain" Margin="-10,117,373,-1"/>
         <Button x:Name="btnHome" Content="⌂" Margin="40,32,0,0" VerticalAlignment="Top" Height="64" Width="91" FontFamily="Bahnschrift SemiBold" FontSize="35" BorderThickness="1,1,1,1" RequestedTheme="Default" BackgroundSizing="OuterBorderEdge" Foreground="Black" FontStyle="Normal" Click="btnHome_Click">
@@ -21,10 +22,16 @@
         <Button x:Name="btnSearch" Content="⌕" Margin="302,32,0,0" VerticalAlignment="Top" Height="64" Background="White" FontSize="40" Width="56" Foreground="Black"/>
 
 
-        <TextBlock x:Name="tblWelcome" Text="Welcome to the Studio Ghibli App" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Foreground="#FF3B6AF1"/>
-        <TextBlock x:Name="tbSearch" HorizontalAlignment="Left" Margin="378,39,0,0" TextWrapping="Wrap" Text="Search..." VerticalAlignment="Top" Height="32" Width="1184" SelectionChanged="tbSearch_SelectionChanged" FontFamily="Tahoma" FontWeight="Bold" FontSize="25"/>
-        <Grid x:Name="gridAllFavorites" Margin="1546,114,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <Grid x:Name="gridFavorites" Margin="1552,183,11,805" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <TextBlock x:Name="tblWelcome" Text="Welcome to the Studio Ghibli App" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="100" Foreground="#FF3B6AF1"/>
+
+        <!-- text block not support SelectionChanged -->
+        <TextBox  x:Name="tbSearch" HorizontalAlignment="Left" Margin="378,39,0,0" TextWrapping="Wrap" Text="Search..."  KeyUp="tbSearch_Return"  VerticalAlignment="Top" Height="40" Width="1184" FontFamily="Tahoma" FontWeight="Bold" FontSize="25"/>
+
+        <Grid x:Name="gridAllFavorites" Margin="1250,114,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+
+
+ 
+        <Grid x:Name="gridFavorites" Margin="1250,183,11,805" HorizontalAlignment="Right" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="16*"/>
                 <ColumnDefinition/>
@@ -32,15 +39,42 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="btnFavoriteBase" Content="Enter a Favorite..." Margin="0,10,-5,0" RenderTransformOrigin="0.29,-1.312" Height="65" Width="352" Background="#331144D6" FontSize="25" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top"/>
         </Grid>
-        <Button x:Name="btnFavorite" Content="♡" Margin="1847,114,0,0" VerticalAlignment="Top" Height="58" Width="63" Foreground="#FF3B6AF1" Click="btnFavorite_Click" FontSize="35" HorizontalAlignment="Right">
+
+
+
+
+        <Button x:Name="btnFavorite" Content="♡" Margin="1300,114,0,0"  VerticalAlignment="Top" Height="58" Width="63" Foreground="#FF3B6AF1" Click="btnFavorite_Click" FontSize="35" HorizontalAlignment="Left">
             <Button.Background>
                 <SolidColorBrush Color="#FF803030" Opacity="0"/>
             </Button.Background>
         </Button>
-        <ListView HorizontalAlignment="Right" Width="363" Margin="1546,183,0,-4" VerticalAlignment="Top"/>
+        <ListView HorizontalAlignment="Right" Width="363" Margin="1200,183,0,-4" VerticalAlignment="Top"/>
 
         <TextBox x:Name="tbFavorite" HorizontalAlignment="Right" Margin="0,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="64" Width="358" FontSize="25" FontWeight="Bold" KeyUp="tbFavorite_KeyUp"/>
         <TextBox x:Name="tbFavoriteRemove" HorizontalAlignment="Right" Margin="0,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="62" Width="358" FontSize="25" FontWeight="Bold" KeyUp="tbFavoriteRemove_KeyUp"/>
+
+
+        <Grid x:Name="movies"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="1200" Margin="10,150,0,0">
+
+            <ListView x:Name="MovieGrid" ItemsSource="{Binding Movies}"           IsItemClickEnabled="True"  ItemClick="MovieGrid_ItemClick">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapGrid Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:Movie">
+                        <StackPanel Width="200" Margin="5">
+                            <Image Source="{Binding Image}" Width="200" Height="300" Stretch="UniformToFill" />
+                            <TextBlock Text="{Binding Title}" FontSize="18" TextAlignment="Center" Margin="0,10,0,0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid> 
+
     </Grid>
+ 
+    
 
 </Page>
