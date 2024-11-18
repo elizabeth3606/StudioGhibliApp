@@ -206,7 +206,8 @@ namespace StudioGhibliApp
                 if (text.Length > 0 && text != "Search...")
                 {
                     tblWelcome.Visibility = Visibility.Collapsed;
-                    string url =  text;
+                    string url = FixUrl(text);
+                    // if not start with httpsL//, add
                     wvMain.Navigate(new Uri(url));
                     wvMain.Visibility = Visibility.Visible;
                     btnFavorite.Content = "♡";
@@ -232,6 +233,25 @@ namespace StudioGhibliApp
                     btnFavorite.Focus(FocusState.Programmatic);
                 }
             }
+        }
+
+        private String FixUrl(String url)
+        {
+            if (url.StartsWith("https://") && !url.StartsWith("https://www."))
+            {
+                url = url.Substring(0, 8) + "www." + url.Substring(8);
+            }
+            else if (url.StartsWith("www."))
+            {
+                url = "https://" + url;
+            }
+            else
+            {
+                url = "https://www." + url;
+            }
+
+            return url.ToLower(); 
+
         }
 
         private String FixText(String text)
@@ -372,16 +392,12 @@ namespace StudioGhibliApp
             btnFavorite.Content = "♥︎";
             tblWelcome.Visibility = Visibility.Collapsed;
 
+         
             display = all.FirstOrDefault(m => m.Title == ((Button)sender).Content);
         }
         private void btnFavorite_Click(object sender, RoutedEventArgs e)
         {
-            // reset the favorite textbox to it's default state
-            // tbFavorite.Text = "<Enter A New Favorite>";
-            // tbFavorite.Visibility = Visibility.Visible;
-            // tbFavorite.SelectAll();
-            // tbFavorite.Focus(FocusState.Programmatic);
-
+ 
           
 
             // add current movie into fav: if wv is in display
