@@ -43,8 +43,8 @@
 
 
 
-        <Button x:Name="btnFavorite" Content="♡" Margin="1300,114,0,0"  VerticalAlignment="Top" Height="58" Width="63" Foreground="#FF3B6AF1" Click="btnFavorite_Click" FontSize="35" HorizontalAlignment="Left">
-            <Button.Background>
+        <Button x:Name="btnFavorite" Content="♡" Margin="1250,114,0,0"  VerticalAlignment="Top" Height="58" Width="63" Foreground="#FF3B6AF1" Click="btnFavorite_Click" FontSize="35" HorizontalAlignment="Left">
+            <Button.Background> 
                 <SolidColorBrush Color="#FF803030" Opacity="0"/>
             </Button.Background>
         </Button>

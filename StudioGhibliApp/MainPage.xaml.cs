@@ -35,7 +35,9 @@ namespace StudioGhibliApp
         private int faveCount;
         private String stringUrl;
         private Dictionary<string, string> urls;
-         
+
+        private List<Movie> all;
+
         // fav titles
         HashSet<string> favs = new HashSet<string>();
 
@@ -50,7 +52,8 @@ namespace StudioGhibliApp
         {
             this.InitializeComponent();
 
-             LoadMoviesAsync();
+            _ =  LoadMoviesAsync();
+
 
             // initialization code
             btnFavoriteBase.Visibility = Visibility.Collapsed;
@@ -101,6 +104,8 @@ namespace StudioGhibliApp
             var movies = JsonSerializer.Deserialize<List<Movie>>(response);
 
             // update link: name->url
+
+            all = movies;
 
             MovieGrid.ItemsSource = movies; // Binding the data to the grid
         
@@ -204,7 +209,7 @@ namespace StudioGhibliApp
                     string url =  text;
                     wvMain.Navigate(new Uri(url));
                     wvMain.Visibility = Visibility.Visible;
-                
+                    btnFavorite.Content = "♡";
                 }
             }
         }
@@ -256,6 +261,57 @@ namespace StudioGhibliApp
             return url;
         }
 
+        private void RefreshFavs() {
+            // for each fav, add button
+            var buttonsToRemove = gridFavorites.Children.OfType<Button>()
+                                     .Where(b => b.Name != "btnFavoriteBase")
+                                     .ToList();
+
+            // Remove the buttons
+            foreach (var button in buttonsToRemove)
+            {
+                gridFavorites.Children.Remove(button);
+            }
+
+            // add according to favs
+            faveCount = 0;
+
+            foreach (string s in favs)
+            {
+                Button newFavorite = new Button();
+                // add the new button to the appropriate grid, for formatting
+                gridFavorites.Children.Add(newFavorite);
+
+                newFavorite.Content = s; // the text
+                newFavorite.Tag = urls[s];          // the navigation url
+
+                // the name, used to identify it later
+                newFavorite.Name = s;
+
+                // style of the size
+                newFavorite.Height = btnFavoriteBase.Height;
+                newFavorite.Width = btnFavoriteBase.Width;
+                newFavorite.Style = btnFavoriteBase.Style;
+
+                // the font
+                newFavorite.FontFamily = btnFavoriteBase.FontFamily;
+                newFavorite.FontSize = btnFavoriteBase.FontSize;
+                newFavorite.FontStyle = btnFavoriteBase.FontStyle;
+                newFavorite.FontWeight = btnFavoriteBase.FontWeight;
+
+                newFavorite.Margin = btnFavoriteBase.Margin;
+                newFavorite.Margin = new Thickness(
+                btnFavoriteBase.Margin.Left,
+                    btnFavoriteBase.Margin.Top + (faveCount * (newFavorite.Height + separation)),
+                    btnFavoriteBase.Margin.Right,
+                    btnFavoriteBase.Margin.Bottom - (faveCount * (newFavorite.Height + separation)));
+                newFavorite.Click += FavoriteClick;
+                newFavorite.Visibility = Visibility.Visible;
+                faveCount++;
+
+            }
+        }
+
         // creates a new favorite button
         private void CreateNewFavorite(String showText, String url)
         {
@@ -267,39 +323,40 @@ namespace StudioGhibliApp
             }
 
             favs.Add(showText);
+            RefreshFavs();
 
-            Button newFavorite = new Button();
-            // add the new button to the appropriate grid, for formatting
-            gridFavorites.Children.Add(newFavorite);
+            //Button newFavorite = new Button();
+            //// add the new button to the appropriate grid, for formatting
+            //gridFavorites.Children.Add(newFavorite);
 
-            newFavorite.Content = showText; // the text
-            newFavorite.Tag = url;          // the navigation url
+            //newFavorite.Content = showText; // the text
+            //newFavorite.Tag = url;          // the navigation url
 
-            // the name, used to identify it later
-            newFavorite.Name = "fave" + faveCount;
+            //// the name, used to identify it later
+            //newFavorite.Name = "fave" + faveCount;
 
-            // style of the size
-            newFavorite.Height = btnFavoriteBase.Height;
-            newFavorite.Width = btnFavoriteBase.Width;
-            newFavorite.Style = btnFavoriteBase.Style;
+            //// style of the size
+            //newFavorite.Height = btnFavoriteBase.Height;
+            //newFavorite.Width = btnFavoriteBase.Width;
+            //newFavorite.Style = btnFavoriteBase.Style;
 
-            // the font
-            newFavorite.FontFamily = btnFavoriteBase.FontFamily;
-            newFavorite.FontSize = btnFavoriteBase.FontSize;
-            newFavorite.FontStyle = btnFavoriteBase.FontStyle;
-            newFavorite.FontWeight = btnFavoriteBase.FontWeight;
+            //// the font
+            //newFavorite.FontFamily = btnFavoriteBase.FontFamily;
+            //newFavorite.FontSize = btnFavoriteBase.FontSize;
+            //newFavorite.FontStyle = btnFavoriteBase.FontStyle;
+            //newFavorite.FontWeight = btnFavoriteBase.FontWeight;
 
-            newFavorite.Margin = btnFavoriteBase.Margin;
-            newFavorite.Margin = new Thickness(
-                btnFavoriteBase.Margin.Left,
-                btnFavoriteBase.Margin.Top + (faveCount * (newFavorite.Height + separation)),
-                btnFavoriteBase.Margin.Right,
-                btnFavoriteBase.Margin.Bottom - (faveCount * (newFavorite.Height + separation)));
-            newFavorite.Click += FavoriteClick;
-            newFavorite.Visibility = Visibility.Visible;
+            //newFavorite.Margin = btnFavoriteBase.Margin;
+            //newFavorite.Margin = new Thickness(
+            //btnFavoriteBase.Margin.Left,
+            //    btnFavoriteBase.Margin.Top + (faveCount * (newFavorite.Height + separation)),
+            //    btnFavoriteBase.Margin.Right,
+            //    btnFavoriteBase.Margin.Bottom - (faveCount * (newFavorite.Height + separation)));
+            //newFavorite.Click += FavoriteClick;
+            //newFavorite.Visibility = Visibility.Visible;
 
-            // increment our favorite count!
-            faveCount++;
+            //// increment our favorite count!
+            //faveCount++;
         }
 
         // navigate to the appropriate url when they click favorite!
@@ -314,6 +371,8 @@ namespace StudioGhibliApp
             wvMain.Visibility = Visibility.Visible;
             btnFavorite.Content = "♥︎";
             tblWelcome.Visibility = Visibility.Collapsed;
+
+            display = all.FirstOrDefault(m => m.Title == ((Button)sender).Content);
         }
         private void btnFavorite_Click(object sender, RoutedEventArgs e)
         {
@@ -326,14 +385,18 @@ namespace StudioGhibliApp
           
 
             // add current movie into fav: if wv is in display
-            if (wvMain.Visibility == Visibility.Visible && display != null)
+            if (wvMain.Visibility == Visibility.Visible && display != null && (string) btnFavorite.Content == "♡")
             {
 
                 CreateNewFavorite(display.Title, urls[display.Title]); // create the new button
                 btnFavorite.Content = "♥︎";
+                RefreshFavs();
+            } else if (wvMain.Visibility == Visibility.Visible && display != null && (string)btnFavorite.Content == "♥︎")
+            {
+                favs.Remove(display.Title);
+                btnFavorite.Content = "♡";
+                RefreshFavs();
             }
-
-
 
         }
         /*private void btnFavoriteRemove_Click(object sender, RoutedEventArgs e)
