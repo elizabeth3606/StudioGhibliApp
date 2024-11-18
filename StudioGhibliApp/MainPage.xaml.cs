@@ -63,37 +63,34 @@ namespace StudioGhibliApp
             tbFavoriteRemove.Visibility = Visibility.Collapsed;
             /*btnFavoriteRemove.Visibility = Visibility.Collapsed;
             btnFavoriteRemove.Visibility = Visibility.Collapsed;*/
-
-            // init
-            //CreateNewFavorite("my-neighbor-totoro", "https://www.ghiblicollection.com/products/my-neighbor-totoro");
-            //CreateNewFavorite("ponyo", "https://www.ghiblicollection.com/products/ponyo-1");
+ 
 
             urls = new Dictionary<string, string>();
-            urls.Add("Nausicaä of the Valley of the Wind", "https://ghiblicollection.com/products/nausicaa-of-the-valley-of-the-wind");
-            urls.Add("Castle in the Sky", "https://ghiblicollection.com/products/castle-in-the-sky");
+            urls.Add("Nausicaä of the Valley of the Wind", "https://www.imdb.com/title/tt0087544/");
+            urls.Add("Castle in the Sky", "https://www.imdb.com/title/tt0092067/");
             urls.Add("Grave of the Fireflies", "https://www.imdb.com/title/tt0095327/");
-            urls.Add("My Neighbor Totoro", "https://ghiblicollection.com/products/my-neighbor-totoro");
-            urls.Add("Kiki's Delivery Service", "https://ghiblicollection.com/products/kiki-s-delivery-service");
-            urls.Add("Only Yesterday", "https://ghiblicollection.com/products/only-yesterday-2");
-            urls.Add("Porco Rosso", "https://ghiblicollection.com/products/porco-rosso-1");
-            urls.Add("Ocean Waves", "https://ghiblicollection.com/products/ocean-waves-blu-ray");
-            urls.Add("Pom Poko", "https://ghiblicollection.com/products/pom-poko-1");
-            urls.Add("Whisper of the Heart", "https://ghiblicollection.com/products/whisper-of-the-heart-1");
-            urls.Add("Princess Mononoke", "https://ghiblicollection.com/products/princess-mononoke");
-            urls.Add("My Neighbors the Yamadas", "https://ghiblicollection.com/products/my-neighbors-the-yamadas-1");
-            urls.Add("Spirited Away", "https://ghiblicollection.com/products/spirited-away-live-on-stage");
-            urls.Add("The Cat Returns", "https://ghiblicollection.com/products/the-cat-returns-1");
-            urls.Add("Howl's Moving Castle", "https://ghiblicollection.com/products/howl-s-moving-castle-1");
-            urls.Add("Tales from Earthsea", "https://ghiblicollection.com/products/tales-from-earthsea-1");
-            urls.Add("Ponyo", "https://www.ghiblicollection.com/products/ponyo-1");
-            urls.Add("Arrietty", "https://ghiblicollection.com/products/the-secret-world-of-arrietty");
-            urls.Add("From Up on Poppy Hill", "https://ghiblicollection.com/products/from-up-on-poppy-hill");
-            urls.Add("The Wind Rises", "https://ghiblicollection.com/products/the-wind-rises");
-            urls.Add("The Tale of the Princess Kaguya", "https://ghiblicollection.com/products/the-tale-of-the-princess-kaguya-2");
-            urls.Add("When Marnie Was There", "https://ghiblicollection.com/products/when-marnie-was-there-3");
+            urls.Add("My Neighbor Totoro", "https://www.imdb.com/title/tt0096283/");
+            urls.Add("Kiki's Delivery Service", "https://www.imdb.com/title/tt0097814");
+            urls.Add("Only Yesterday", "https://www.imdb.com/title/tt0102587/");
+            urls.Add("Porco Rosso", "https://www.imdb.com/title/tt0104652/");
+            urls.Add("Ocean Waves", "https://www.imdb.com/title/tt0108432");
+            urls.Add("Pom Poko", "https://www.imdb.com/title/tt0110008/");
+            urls.Add("Whisper of the Heart", "https://www.imdb.com/title/tt0113824/");
+            urls.Add("Princess Mononoke", "https://www.imdb.com/title/tt0119698/");
+            urls.Add("My Neighbors the Yamadas", "https://www.imdb.com/title/tt0206013/");
+            urls.Add("Spirited Away", "https://www.imdb.com/title/tt0245429/");
+            urls.Add("The Cat Returns", "https://www.imdb.com/title/tt0347618/");
+            urls.Add("Howl's Moving Castle", "https://www.imdb.com/title/tt0347149/");
+            urls.Add("Tales from Earthsea", "https://www.imdb.com/title/tt0495596/");
+            urls.Add("Ponyo", "https://www.imdb.com/title/tt0876563/");
+            urls.Add("Arrietty", "https://www.imdb.com/title/tt1568921/");
+            urls.Add("From Up on Poppy Hill", "https://www.imdb.com/title/tt1798188/");
+            urls.Add("The Wind Rises", "https://www.imdb.com/title/tt2013293/");
+            urls.Add("The Tale of the Princess Kaguya", "https://www.imdb.com/title/tt2576852/");
+            urls.Add("When Marnie Was There", "https://www.imdb.com/title/tt3398268/");
             urls.Add("The Red Turtle" , "https://www.imdb.com/title/tt3666024");
-            urls.Add("Earwig and the Witch", "https://ghiblicollection.com/products/earwig-and-the-witch");
-            urls.Add("The Boy and the Heron", "https://ghiblicollection.com/products/the-boy-and-the-heron");
+            urls.Add("Earwig and the Witch", "https://www.imdb.com/title/tt12441478/");
+            urls.Add("The Boy and the Heron", "https://www.imdb.com/title/tt6587046/");
 
         }
 
