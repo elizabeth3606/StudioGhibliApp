@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using static System.Net.Mime.MediaTypeNames;
+using System.Text.RegularExpressions;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -144,7 +145,7 @@ namespace StudioGhibliApp
                     CloseButtonText = "OK"
                 };
 
-                dialog.ShowAsync();
+                _ = dialog.ShowAsync();
             }
         }
         private void MovieGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -194,24 +195,69 @@ namespace StudioGhibliApp
                 // only let the user add a favorite button if it's not the default text
                 // TODO add checks on what they typed, so I at least THINK its a valid url...
 
-                tblWelcome.Visibility = Visibility.Collapsed;
-                movies.Visibility = Visibility.Collapsed;
-
-                display = null;
-
                 String text = tbSearch.Text.Trim();
                 if (text.Length > 0 && text != "Search...")
                 {
                     tblWelcome.Visibility = Visibility.Collapsed;
                     string url = FixUrl(text);
-                    // if not start with httpsL//, add
-                    wvMain.Navigate(new Uri(url));
-                    wvMain.Visibility = Visibility.Visible;
-                    btnFavorite.Content = "♡";
+                    if (IsValidUrl(url) && url.EndsWith(".com"))
+                    {
+                        wvMain.Navigate(new Uri(url));
+                        wvMain.Visibility = Visibility.Visible;
+                        btnFavorite.Content = "♡";
+
+                        tblWelcome.Visibility = Visibility.Collapsed;
+                        movies.Visibility = Visibility.Collapsed;
+
+                        display = null;
+                        return;
+                    }
+                    ContentDialog dialog = new ContentDialog
+                    {
+                        Title = "Search ",
+                        Content = "invalid url: " + url,
+                        CloseButtonText = "OK"
+                    };
+
+                    _ = dialog.ShowAsync();
+
                 }
             }
         }
-        
+
+        public  bool IsValidUrl(string url)
+        {
+            // Trim any leading/trailing whitespace
+            url = url.Trim();
+
+            // Check if the URL matches a basic regex pattern
+            //         var regex = new Regex(@"^(https?://)?([a-z0-9-]+\.)+[a-z]{2,6}(:[0-9]{1,4})?(/.*)?$", RegexOptions.IgnoreCase);
+
+            var regex = new Regex(@"^(https?://)?([a-z0-9-]+\.)+[a-z]{2,6}(:[0-9]{1,4})?(/.*)?$", RegexOptions.IgnoreCase);
+            if (!regex.IsMatch(url))
+            {
+                return false;
+            }
+
+            try
+            {
+                // Check if the URL is complete (if missing scheme, assume 'http')
+                Uri uri;
+                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                {
+                    // If missing scheme (like "www.google.com"), add "http://"
+                    url = "http://" + url;
+                }
+
+                uri = new Uri(url);  // Try to create a Uri object
+                return uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps; // Must be HTTP or HTTPS
+            }
+            catch (UriFormatException)
+            {
+                return false;
+            }
+        }
+
 
         private void tbFavorite_KeyUp(object sender, KeyRoutedEventArgs e)
         {
@@ -533,7 +579,8 @@ namespace StudioGhibliApp
 
     public async Task<List<Movie>> GetMoviesAsync()
     {
-        var response = await client.GetStringAsync("https://ghibliapi.dev/films");
+            // test url https://www.themoviedb.org/t/p/original/tcrkfB8SRPQCgwI88hQScua6nxh.jpg
+            var response = await client.GetStringAsync("https://ghibliapi.dev/films");
         var movies = JsonSerializer.Deserialize<List<Movie>>(response);
         return movies;
     }
