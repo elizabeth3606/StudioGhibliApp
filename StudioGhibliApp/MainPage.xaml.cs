@@ -244,7 +244,7 @@ namespace StudioGhibliApp
          
             if (!url.EndsWith(".com"))
             {
-                url = url + ".com";
+                url += ".com";
             }
             
             if (url.StartsWith("https://") && !url.StartsWith("https://www."))
