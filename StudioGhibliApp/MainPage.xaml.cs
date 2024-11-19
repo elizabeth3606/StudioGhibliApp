@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using static System.Net.Mime.MediaTypeNames;
 using System.Text.RegularExpressions;
+using Windows.Storage;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -53,7 +54,7 @@ namespace StudioGhibliApp
         {
             this.InitializeComponent();
 
-            _ =  LoadMoviesAsync();
+             LoadMoviesAsync();
 
 
             // initialization code
@@ -96,16 +97,23 @@ namespace StudioGhibliApp
         }
 
 
-        private async Task LoadMoviesAsync()
+        private async void LoadMoviesAsync()
         {
             var response = await client.GetStringAsync("https://ghibliapi.dev/films");
             var movies = JsonSerializer.Deserialize<List<Movie>>(response);
 
-            // update link: name->url
+            StorageFile jsonFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Data/movies.json"));
+ 
+            string jsonText = await FileIO.ReadTextAsync(jsonFile);
+            // Optionally, you can deserialize the JSON into an object
+            //  var jsonData = JsonConvert.DeserializeObject<MyData>(jsonText);
 
-            all = movies;
+            // var response = await client.GetStringAsync("https://ghibliapi.dev/films");
+            all  = JsonSerializer.Deserialize<List<Movie>>(jsonText);
 
-            MovieGrid.ItemsSource = movies; // Binding the data to the grid
+ 
+
+            MovieGrid.ItemsSource = all; // Binding the data to the grid
         
 
         }
@@ -573,17 +581,5 @@ namespace StudioGhibliApp
         }*/
     }
 
-    internal class MovieService
-    {
-            private static readonly HttpClient client = new HttpClient();
 
-    public async Task<List<Movie>> GetMoviesAsync()
-    {
-            // test url https://www.themoviedb.org/t/p/original/tcrkfB8SRPQCgwI88hQScua6nxh.jpg
-            var response = await client.GetStringAsync("https://ghibliapi.dev/films");
-        var movies = JsonSerializer.Deserialize<List<Movie>>(response);
-        return movies;
-    }
-    
-    }
 }
