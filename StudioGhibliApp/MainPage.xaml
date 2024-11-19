@@ -10,7 +10,7 @@
 
 
 
-    <Grid Background="MintCream" HorizontalAlignment="Stretch">
+    <Grid Background="MintCream" HorizontalAlignment="Stretch" >
         <WebView x:Name="wvMain" Margin="-10,117,373,-1"/>
         <Button x:Name="btnHome" Content="⌂" Margin="40,32,0,0" VerticalAlignment="Top" Height="64" Width="91" FontFamily="Bahnschrift SemiBold" FontSize="35" BorderThickness="1,1,1,1" RequestedTheme="Default" BackgroundSizing="OuterBorderEdge" Foreground="Black" FontStyle="Normal" Click="btnHome_Click">
             <Button.Background>

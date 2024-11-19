@@ -18,6 +18,9 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
+using System.Xml.Linq;
+using Windows.Storage;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -353,9 +356,18 @@ namespace StudioGhibliApp
             private static readonly HttpClient client = new HttpClient();
 
     public async Task<List<Movie>> GetMoviesAsync()
-    {
-        var response = await client.GetStringAsync("https://ghibliapi.dev/films");
-        var movies = JsonSerializer.Deserialize<List<Movie>>(response);
+        {
+
+        StorageFile jsonFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Data/data.json"));
+
+        // Read the file as a string
+        string jsonText = await FileIO.ReadTextAsync(jsonFile);
+
+        // Optionally, you can deserialize the JSON into an object
+      //  var jsonData = JsonConvert.DeserializeObject<MyData>(jsonText);
+    
+        // var response = await client.GetStringAsync("https://ghibliapi.dev/films");
+        var movies = JsonSerializer.Deserialize<List<Movie>>(jsonText);
         return movies;
     }
     
