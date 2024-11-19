@@ -27,7 +27,7 @@
         <!-- text block not support SelectionChanged -->
         <TextBox  x:Name="tbSearch" HorizontalAlignment="Left" Margin="378,39,0,0" TextWrapping="Wrap" Text="Search..."  KeyUp="tbSearch_Return"  VerticalAlignment="Top" Height="40" Width="1184" FontFamily="Tahoma" FontWeight="Bold" FontSize="25"/>
 
-        <Grid x:Name="gridAllFavorites" Margin="1250,114,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Grid x:Name="gridAllFavorites" Margin="1800,114,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
 
  
@@ -43,18 +43,15 @@
 
 
 
-        <Button x:Name="btnFavorite" Content="♡" Margin="1250,114,0,0"  VerticalAlignment="Top" Height="58" Width="63" Foreground="#FF3B6AF1" Click="btnFavorite_Click" FontSize="35" HorizontalAlignment="Left">
+        <Button x:Name="btnFavorite" Content="♡" Margin="2200,114,0,0"  VerticalAlignment="Top" Height="58" Width="63" Foreground="#FF3B6AF1" Click="btnFavorite_Click" FontSize="35" HorizontalAlignment="Left">
             <Button.Background> 
                 <SolidColorBrush Color="#FF803030" Opacity="0"/>
             </Button.Background>
         </Button>
-        <ListView HorizontalAlignment="Right" Width="363" Margin="1200,183,0,-4" VerticalAlignment="Top"/>
-
-        <TextBox x:Name="tbFavorite" HorizontalAlignment="Right" Margin="0,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="64" Width="358" FontSize="25" FontWeight="Bold" KeyUp="tbFavorite_KeyUp"/>
-        <TextBox x:Name="tbFavoriteRemove" HorizontalAlignment="Right" Margin="0,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="62" Width="358" FontSize="25" FontWeight="Bold" KeyUp="tbFavoriteRemove_KeyUp"/>
+        <ListView HorizontalAlignment="Right" Width="363" Margin="2200,183,0,-4" VerticalAlignment="Top"/>
 
 
-        <Grid x:Name="movies"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="1200" Margin="10,150,0,0">
+        <Grid x:Name="movies"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="2200"   Margin="-10,137,373,-1">
 
             <ListView x:Name="MovieGrid" ItemsSource="{Binding Movies}"           IsItemClickEnabled="True"  ItemClick="MovieGrid_ItemClick">
                 <ListView.ItemsPanel>

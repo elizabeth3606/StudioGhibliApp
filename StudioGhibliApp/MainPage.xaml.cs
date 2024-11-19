@@ -56,10 +56,10 @@ namespace StudioGhibliApp
 
             // initialization code
             btnFavoriteBase.Visibility = Visibility.Collapsed;
-            tbFavorite.Visibility = Visibility.Collapsed;
+            //tbFavorite.Visibility = Visibility.Collapsed;
             faveCount = 0;
 
-            tbFavoriteRemove.Visibility = Visibility.Collapsed;
+            //tbFavoriteRemove.Visibility = Visibility.Collapsed;
             /*btnFavoriteRemove.Visibility = Visibility.Collapsed;
             btnFavoriteRemove.Visibility = Visibility.Collapsed;*/
 
@@ -236,27 +236,17 @@ namespace StudioGhibliApp
         }
 
 
-        private void tbFavorite_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            // if the user hits enter on the favorite textbox, add a favorite button!
-            if (e.Key == Windows.System.VirtualKey.Enter)
-            {
-                // only let the user add a favorite button if it's not the default text
-                // TODO add checks on what they typed, so I at least THINK its a valid url...?
-                String text = tbFavorite.Text.Trim();
-                if (text.Length > 0 && text != "<Enter A New Favorite>")
-                {
-                    String url = FixText(text);  // if they type 'imdb' for example, add http..., and .com
-
-                    CreateNewFavorite(text, url); // create the new button
-                    tbFavorite.Visibility = Visibility.Collapsed;
-                    btnFavorite.Focus(FocusState.Programmatic);
-                }
-            }
-        }
+ 
 
         private String FixUrl(String url)
+
         {
+         
+            if (!url.EndsWith(".com"))
+            {
+                url = url + ".com";
+            }
+            
             if (url.StartsWith("https://") && !url.StartsWith("https://www."))
             {
                 url = url.Substring(0, 8) + "www." + url.Substring(8);
@@ -366,38 +356,6 @@ namespace StudioGhibliApp
             favs.Add(showText);
             RefreshFavs();
 
-            //Button newFavorite = new Button();
-            //// add the new button to the appropriate grid, for formatting
-            //gridFavorites.Children.Add(newFavorite);
-
-            //newFavorite.Content = showText; // the text
-            //newFavorite.Tag = url;          // the navigation url
-
-            //// the name, used to identify it later
-            //newFavorite.Name = "fave" + faveCount;
-
-            //// style of the size
-            //newFavorite.Height = btnFavoriteBase.Height;
-            //newFavorite.Width = btnFavoriteBase.Width;
-            //newFavorite.Style = btnFavoriteBase.Style;
-
-            //// the font
-            //newFavorite.FontFamily = btnFavoriteBase.FontFamily;
-            //newFavorite.FontSize = btnFavoriteBase.FontSize;
-            //newFavorite.FontStyle = btnFavoriteBase.FontStyle;
-            //newFavorite.FontWeight = btnFavoriteBase.FontWeight;
-
-            //newFavorite.Margin = btnFavoriteBase.Margin;
-            //newFavorite.Margin = new Thickness(
-            //btnFavoriteBase.Margin.Left,
-            //    btnFavoriteBase.Margin.Top + (faveCount * (newFavorite.Height + separation)),
-            //    btnFavoriteBase.Margin.Right,
-            //    btnFavoriteBase.Margin.Bottom - (faveCount * (newFavorite.Height + separation)));
-            //newFavorite.Click += FavoriteClick;
-            //newFavorite.Visibility = Visibility.Visible;
-
-            //// increment our favorite count!
-            //faveCount++;
         }
 
         // navigate to the appropriate url when they click favorite!
@@ -444,74 +402,8 @@ namespace StudioGhibliApp
             tbFavoriteRemove.SelectAll();
             tbFavoriteRemove.Focus(FocusState.Programmatic);
         }*/
-
-        private void tbFavoriteRemove_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            // if the user hits enter on the favorite textbox, add a favorite button!
-            if (e.Key == Windows.System.VirtualKey.Enter)
-            {
-                // only let the user remove a favorite button if it's not the default text
-                // TODO add checks on what they typed, so I at least THINK its a valid url...?
-                String text = tbFavorite.Text.Trim();
-                if (text.Length > 0 && text != "<Enter A Favorite Name>")
-                {
-                    //String url = FixText(text);  // if they type 'imdb' for example, add http..., and .com
-
-                    // don't remove the add, base, or move buttons!
-                    if (text != "+" && text != "-" && text != "Button")
-                    {
-                        RemoveFavorite(text); // remove the button
-                        tbFavorite.Visibility = Visibility.Collapsed;
-                        btnFavorite.Focus(FocusState.Programmatic); // yes, give focus back to ADD favorite
-                    }
-                }
-            }
-        }
-
-        private void RemoveFavorite(String text)
-        {
-            double top = 0.0;
-            bool removed = false;
-            foreach (var item in gridFavorites.Children)
-            {
-                if (item is Button b)
-                {
-                    if (b.Content.ToString() == text)
-                    {
-                        top = b.Margin.Top;
-
-                        gridFavorites.Children.Remove(item);
-                        faveCount--;
-                        removed = true;
-                        break;
-                    }
-                }
-            }
-
-            if (removed)
-            {
-                // move each button that is BELOW that, up by the appropriate margin!
-                foreach (var item in gridFavorites.Children)
-                {
-                    if (item is Button b)
-                    {
-                        String btext = b.Content.ToString();
-                        if (btext != "+" && btext != "-" && btext != "Button")
-                        {
-                            if (b.Margin.Top > top)
-                            {
-                                b.Margin = new Thickness(
-                                    b.Margin.Left,
-                                    b.Margin.Top - (b.Height + separation),
-                                    b.Margin.Right,
-                                    b.Margin.Bottom);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
+ 
+  
          private void btnFore_Click(object sender, RoutedEventArgs e)
         {
             if (wvMain.CanGoForward)
