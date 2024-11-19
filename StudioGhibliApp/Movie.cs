@@ -31,6 +31,9 @@ public class Movie
         [JsonPropertyName("description")]
     public string Description { get; set; }
 
+    [JsonPropertyName("url")]
+     public string Url { get; set; }
+
     [JsonPropertyName("image")] // Only if image is present; otherwise, remove this
     public string Image { get; set; }
 

@@ -36,7 +36,6 @@ namespace StudioGhibliApp
         // the number of favorites buttons i've added
         private int faveCount;
         private String stringUrl;
-        private Dictionary<string, string> urls;
 
         private List<Movie> all;
 
@@ -63,34 +62,7 @@ namespace StudioGhibliApp
             tbFavoriteRemove.Visibility = Visibility.Collapsed;
             /*btnFavoriteRemove.Visibility = Visibility.Collapsed;
             btnFavoriteRemove.Visibility = Visibility.Collapsed;*/
- 
 
-            urls = new Dictionary<string, string>();
-            urls.Add("Nausicaä of the Valley of the Wind", "https://www.imdb.com/title/tt0087544/");
-            urls.Add("Castle in the Sky", "https://www.imdb.com/title/tt0092067/");
-            urls.Add("Grave of the Fireflies", "https://www.imdb.com/title/tt0095327/");
-            urls.Add("My Neighbor Totoro", "https://www.imdb.com/title/tt0096283/");
-            urls.Add("Kiki's Delivery Service", "https://www.imdb.com/title/tt0097814");
-            urls.Add("Only Yesterday", "https://www.imdb.com/title/tt0102587/");
-            urls.Add("Porco Rosso", "https://www.imdb.com/title/tt0104652/");
-            urls.Add("Ocean Waves", "https://www.imdb.com/title/tt0108432");
-            urls.Add("Pom Poko", "https://www.imdb.com/title/tt0110008/");
-            urls.Add("Whisper of the Heart", "https://www.imdb.com/title/tt0113824/");
-            urls.Add("Princess Mononoke", "https://www.imdb.com/title/tt0119698/");
-            urls.Add("My Neighbors the Yamadas", "https://www.imdb.com/title/tt0206013/");
-            urls.Add("Spirited Away", "https://www.imdb.com/title/tt0245429/");
-            urls.Add("The Cat Returns", "https://www.imdb.com/title/tt0347618/");
-            urls.Add("Howl's Moving Castle", "https://www.imdb.com/title/tt0347149/");
-            urls.Add("Tales from Earthsea", "https://www.imdb.com/title/tt0495596/");
-            urls.Add("Ponyo", "https://www.imdb.com/title/tt0876563/");
-            urls.Add("Arrietty", "https://www.imdb.com/title/tt1568921/");
-            urls.Add("From Up on Poppy Hill", "https://www.imdb.com/title/tt1798188/");
-            urls.Add("The Wind Rises", "https://www.imdb.com/title/tt2013293/");
-            urls.Add("The Tale of the Princess Kaguya", "https://www.imdb.com/title/tt2576852/");
-            urls.Add("When Marnie Was There", "https://www.imdb.com/title/tt3398268/");
-            urls.Add("The Red Turtle" , "https://www.imdb.com/title/tt3666024");
-            urls.Add("Earwig and the Witch", "https://www.imdb.com/title/tt12441478/");
-            urls.Add("The Boy and the Heron", "https://www.imdb.com/title/tt6587046/");
 
         }
 
@@ -164,7 +136,7 @@ namespace StudioGhibliApp
                 // Log or update the UI
                 Debug.WriteLine($"Movie clicked: {clickedMovie.Title}, Selected: {clickedMovie.IsSelected}");
    
-                wvMain.Navigate(new Uri(urls[clickedMovie.Title]  ));
+                wvMain.Navigate(new Uri(clickedMovie.Url));
                 movies.Visibility = Visibility.Collapsed;
 
                 display = clickedMovie;
@@ -172,7 +144,7 @@ namespace StudioGhibliApp
                 tblWelcome.Visibility = Visibility.Collapsed;
                 // display wv
                 wvMain.Visibility = Visibility.Visible;
-                tbSearch.Text = urls[clickedMovie.Title];
+                tbSearch.Text = clickedMovie.Url;
 
                 if (favs.Contains(clickedMovie.Title))
                 {
@@ -351,7 +323,8 @@ namespace StudioGhibliApp
                 gridFavorites.Children.Add(newFavorite);
 
                 newFavorite.Content = s; // the text
-                newFavorite.Tag = urls[s];          // the navigation url
+                Movie movie = all.FirstOrDefault(m => m.Title.Equals(s, StringComparison.OrdinalIgnoreCase));
+                newFavorite.Tag = movie.Url;           // the navigation url
 
                 // the name, used to identify it later
                 newFavorite.Name = s;
@@ -452,7 +425,7 @@ namespace StudioGhibliApp
             if (wvMain.Visibility == Visibility.Visible && display != null && (string) btnFavorite.Content == "♡")
             {
 
-                CreateNewFavorite(display.Title, urls[display.Title]); // create the new button
+                CreateNewFavorite(display.Title, display.Url); // create the new button
                 btnFavorite.Content = "♥︎";
                 RefreshFavs();
             } else if (wvMain.Visibility == Visibility.Visible && display != null && (string)btnFavorite.Content == "♥︎")
