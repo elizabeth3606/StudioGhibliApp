@@ -47,9 +47,7 @@ namespace StudioGhibliApp
         private Movie display;
 
         // title to url
-
-        private static readonly HttpClient client = new HttpClient();
-
+ 
         public MainPage()
         {
             this.InitializeComponent();
@@ -99,8 +97,8 @@ namespace StudioGhibliApp
 
         private async void LoadMoviesAsync()
         {
-            var response = await client.GetStringAsync("https://ghibliapi.dev/films");
-            var movies = JsonSerializer.Deserialize<List<Movie>>(response);
+            // var response = await client.GetStringAsync("https://ghibliapi.dev/films");
+            // var movies = JsonSerializer.Deserialize<List<Movie>>(response);
 
             StorageFile jsonFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Data/movies.json"));
  
@@ -111,7 +109,6 @@ namespace StudioGhibliApp
             // var response = await client.GetStringAsync("https://ghibliapi.dev/films");
             all  = JsonSerializer.Deserialize<List<Movie>>(jsonText);
 
- 
 
             MovieGrid.ItemsSource = all; // Binding the data to the grid
         
