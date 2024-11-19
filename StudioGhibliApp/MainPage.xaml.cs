@@ -18,9 +18,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Security.Cryptography;
-using static System.Net.Mime.MediaTypeNames;
-using System.Text.RegularExpressions;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -35,17 +32,6 @@ namespace StudioGhibliApp
         // the number of favorites buttons i've added
         private int faveCount;
         private String stringUrl;
-        private Dictionary<string, string> urls;
-
-        private List<Movie> all;
-
-        // fav titles
-        HashSet<string> favs = new HashSet<string>();
-
-
-        private Movie display;
-
-        // title to url
 
         private static readonly HttpClient client = new HttpClient();
 
@@ -53,8 +39,7 @@ namespace StudioGhibliApp
         {
             this.InitializeComponent();
 
-            _ =  LoadMoviesAsync();
-
+             LoadMoviesAsync();
 
             // initialization code
             btnFavoriteBase.Visibility = Visibility.Collapsed;
@@ -64,35 +49,10 @@ namespace StudioGhibliApp
             tbFavoriteRemove.Visibility = Visibility.Collapsed;
             /*btnFavoriteRemove.Visibility = Visibility.Collapsed;
             btnFavoriteRemove.Visibility = Visibility.Collapsed;*/
- 
 
-            urls = new Dictionary<string, string>();
-            urls.Add("Nausicaä of the Valley of the Wind", "https://www.imdb.com/title/tt0087544/");
-            urls.Add("Castle in the Sky", "https://www.imdb.com/title/tt0092067/");
-            urls.Add("Grave of the Fireflies", "https://www.imdb.com/title/tt0095327/");
-            urls.Add("My Neighbor Totoro", "https://www.imdb.com/title/tt0096283/");
-            urls.Add("Kiki's Delivery Service", "https://www.imdb.com/title/tt0097814");
-            urls.Add("Only Yesterday", "https://www.imdb.com/title/tt0102587/");
-            urls.Add("Porco Rosso", "https://www.imdb.com/title/tt0104652/");
-            urls.Add("Ocean Waves", "https://www.imdb.com/title/tt0108432");
-            urls.Add("Pom Poko", "https://www.imdb.com/title/tt0110008/");
-            urls.Add("Whisper of the Heart", "https://www.imdb.com/title/tt0113824/");
-            urls.Add("Princess Mononoke", "https://www.imdb.com/title/tt0119698/");
-            urls.Add("My Neighbors the Yamadas", "https://www.imdb.com/title/tt0206013/");
-            urls.Add("Spirited Away", "https://www.imdb.com/title/tt0245429/");
-            urls.Add("The Cat Returns", "https://www.imdb.com/title/tt0347618/");
-            urls.Add("Howl's Moving Castle", "https://www.imdb.com/title/tt0347149/");
-            urls.Add("Tales from Earthsea", "https://www.imdb.com/title/tt0495596/");
-            urls.Add("Ponyo", "https://www.imdb.com/title/tt0876563/");
-            urls.Add("Arrietty", "https://www.imdb.com/title/tt1568921/");
-            urls.Add("From Up on Poppy Hill", "https://www.imdb.com/title/tt1798188/");
-            urls.Add("The Wind Rises", "https://www.imdb.com/title/tt2013293/");
-            urls.Add("The Tale of the Princess Kaguya", "https://www.imdb.com/title/tt2576852/");
-            urls.Add("When Marnie Was There", "https://www.imdb.com/title/tt3398268/");
-            urls.Add("The Red Turtle" , "https://www.imdb.com/title/tt3666024");
-            urls.Add("Earwig and the Witch", "https://www.imdb.com/title/tt12441478/");
-            urls.Add("The Boy and the Heron", "https://www.imdb.com/title/tt6587046/");
-
+            // init
+            CreateNewFavorite("my-neighbor-totoro", "https://www.ghiblicollection.com/products/my-neighbor-totoro");
+            CreateNewFavorite("ponyo", "https://www.ghiblicollection.com/products/ponyo-1");
         }
 
 
@@ -100,11 +60,6 @@ namespace StudioGhibliApp
         {
             var response = await client.GetStringAsync("https://ghibliapi.dev/films");
             var movies = JsonSerializer.Deserialize<List<Movie>>(response);
-
-            // update link: name->url
-
-            all = movies;
-
             MovieGrid.ItemsSource = movies; // Binding the data to the grid
         
 
@@ -122,10 +77,7 @@ namespace StudioGhibliApp
 
             /*dialog.ShowAsync();*/
             tblWelcome.Visibility = Visibility.Visible;
-            wvMain.Visibility = Visibility.Collapsed;
-            movies.Visibility = Visibility.Visible;
-
-            display = null;
+            wvMain.Visibility = Visibility.Collapsed; 
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -145,46 +97,20 @@ namespace StudioGhibliApp
                     CloseButtonText = "OK"
                 };
 
-                _ = dialog.ShowAsync();
+                dialog.ShowAsync();
             }
         }
         private void MovieGrid_ItemClick(object sender, ItemClickEventArgs e)
-
-        {
-            if (e.ClickedItem is Movie clickedMovie)
             {
-                // Handle the click event, e.g., toggle state or show details
-                clickedMovie.IsSelected = !clickedMovie.IsSelected;
-
-                // Log or update the UI
-                Debug.WriteLine($"Movie clicked: {clickedMovie.Title}, Selected: {clickedMovie.IsSelected}");
-   
-                wvMain.Navigate(new Uri(urls[clickedMovie.Title]  ));
-                movies.Visibility = Visibility.Collapsed;
-
-                display = clickedMovie;
-
-                tblWelcome.Visibility = Visibility.Collapsed;
-                // display wv
-                wvMain.Visibility = Visibility.Visible;
-                tbSearch.Text = urls[clickedMovie.Title];
-
-                if (favs.Contains(clickedMovie.Title))
+                if (e.ClickedItem is Movie clickedMovie)
                 {
-                    btnFavorite.Content = "♥︎";
-                
-                } else
-                {
-                    btnFavorite.Content   = "♡";
+                    // Handle the click event, e.g., toggle state or show details
+                    clickedMovie.IsSelected = !clickedMovie.IsSelected;
+
+                    // Log or update the UI
+                    Debug.WriteLine($"Movie clicked: {clickedMovie.Title}, Selected: {clickedMovie.IsSelected}");
                 }
-
             }
-
-            // pull url, display
-
-            // hide grid
-
-        }
 
 
         private void tbSearch_Return(object sender, KeyRoutedEventArgs e)
@@ -193,71 +119,18 @@ namespace StudioGhibliApp
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 // only let the user add a favorite button if it's not the default text
-                // TODO add checks on what they typed, so I at least THINK its a valid url...
-
+                // TODO add checks on what they typed, so I at least THINK its a valid url...?
                 String text = tbSearch.Text.Trim();
                 if (text.Length > 0 && text != "Search...")
                 {
                     tblWelcome.Visibility = Visibility.Collapsed;
-                    string url = FixUrl(text);
-                    if (IsValidUrl(url) && url.EndsWith(".com"))
-                    {
-                        wvMain.Navigate(new Uri(url));
-                        wvMain.Visibility = Visibility.Visible;
-                        btnFavorite.Content = "♡";
-
-                        tblWelcome.Visibility = Visibility.Collapsed;
-                        movies.Visibility = Visibility.Collapsed;
-
-                        display = null;
-                        return;
-                    }
-                    ContentDialog dialog = new ContentDialog
-                    {
-                        Title = "Search ",
-                        Content = "invalid url: " + url,
-                        CloseButtonText = "OK"
-                    };
-
-                    _ = dialog.ShowAsync();
-
+                    string url = "https://ghiblicollection.com/search?options%5Bprefix%5D=last&type=product&q=" + text;
+                    wvMain.Navigate(new Uri(url));
+                    wvMain.Visibility = Visibility.Visible;
                 }
             }
         }
-
-        public  bool IsValidUrl(string url)
-        {
-            // Trim any leading/trailing whitespace
-            url = url.Trim();
-
-            // Check if the URL matches a basic regex pattern
-            //         var regex = new Regex(@"^(https?://)?([a-z0-9-]+\.)+[a-z]{2,6}(:[0-9]{1,4})?(/.*)?$", RegexOptions.IgnoreCase);
-
-            var regex = new Regex(@"^(https?://)?([a-z0-9-]+\.)+[a-z]{2,6}(:[0-9]{1,4})?(/.*)?$", RegexOptions.IgnoreCase);
-            if (!regex.IsMatch(url))
-            {
-                return false;
-            }
-
-            try
-            {
-                // Check if the URL is complete (if missing scheme, assume 'http')
-                Uri uri;
-                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
-                {
-                    // If missing scheme (like "www.google.com"), add "http://"
-                    url = "http://" + url;
-                }
-
-                uri = new Uri(url);  // Try to create a Uri object
-                return uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps; // Must be HTTP or HTTPS
-            }
-            catch (UriFormatException)
-            {
-                return false;
-            }
-        }
-
+        
 
         private void tbFavorite_KeyUp(object sender, KeyRoutedEventArgs e)
         {
@@ -276,25 +149,6 @@ namespace StudioGhibliApp
                     btnFavorite.Focus(FocusState.Programmatic);
                 }
             }
-        }
-
-        private String FixUrl(String url)
-        {
-            if (url.StartsWith("https://") && !url.StartsWith("https://www."))
-            {
-                url = url.Substring(0, 8) + "www." + url.Substring(8);
-            }
-            else if (url.StartsWith("www."))
-            {
-                url = "https://" + url;
-            }
-            else
-            {
-                url = "https://www." + url;
-            }
-
-            return url.ToLower(); 
-
         }
 
         private String FixText(String text)
@@ -324,139 +178,60 @@ namespace StudioGhibliApp
             return url;
         }
 
-        private void RefreshFavs() {
-            // for each fav, add button
-            var buttonsToRemove = gridFavorites.Children.OfType<Button>()
-                                     .Where(b => b.Name != "btnFavoriteBase")
-                                     .ToList();
-
-            // Remove the buttons
-            foreach (var button in buttonsToRemove)
-            {
-                gridFavorites.Children.Remove(button);
-            }
-
-            // add according to favs
-            faveCount = 0;
-
-            foreach (string s in favs)
-            {
-                Button newFavorite = new Button();
-                // add the new button to the appropriate grid, for formatting
-                gridFavorites.Children.Add(newFavorite);
-
-                newFavorite.Content = s; // the text
-                newFavorite.Tag = urls[s];          // the navigation url
-
-                // the name, used to identify it later
-                newFavorite.Name = s;
-
-                // style of the size
-                newFavorite.Height = btnFavoriteBase.Height;
-                newFavorite.Width = btnFavoriteBase.Width;
-                newFavorite.Style = btnFavoriteBase.Style;
-
-                // the font
-                newFavorite.FontFamily = btnFavoriteBase.FontFamily;
-                newFavorite.FontSize = btnFavoriteBase.FontSize;
-                newFavorite.FontStyle = btnFavoriteBase.FontStyle;
-                newFavorite.FontWeight = btnFavoriteBase.FontWeight;
-
-                newFavorite.Margin = btnFavoriteBase.Margin;
-                newFavorite.Margin = new Thickness(
-                btnFavoriteBase.Margin.Left,
-                    btnFavoriteBase.Margin.Top + (faveCount * (newFavorite.Height + separation)),
-                    btnFavoriteBase.Margin.Right,
-                    btnFavoriteBase.Margin.Bottom - (faveCount * (newFavorite.Height + separation)));
-                newFavorite.Click += FavoriteClick;
-                newFavorite.Visibility = Visibility.Visible;
-                faveCount++;
-
-            }
-        }
-
         // creates a new favorite button
         private void CreateNewFavorite(String showText, String url)
         {
+            Button newFavorite = new Button();
+            // add the new button to the appropriate grid, for formatting
+            gridFavorites.Children.Add(newFavorite);
 
-            if (favs.Contains(showText))
-            {
-                btnFavorite.Content = "♥︎";
-                return;
-            }
+            newFavorite.Content = showText; // the text
+            newFavorite.Tag = url;          // the navigation url
 
-            favs.Add(showText);
-            RefreshFavs();
+            // the name, used to identify it later
+            newFavorite.Name = "fave" + faveCount;
 
-            //Button newFavorite = new Button();
-            //// add the new button to the appropriate grid, for formatting
-            //gridFavorites.Children.Add(newFavorite);
+            // style of the size
+            newFavorite.Height = btnFavoriteBase.Height;
+            newFavorite.Width = btnFavoriteBase.Width;
+            newFavorite.Style = btnFavoriteBase.Style;
 
-            //newFavorite.Content = showText; // the text
-            //newFavorite.Tag = url;          // the navigation url
+            // the font
+            newFavorite.FontFamily = btnFavoriteBase.FontFamily;
+            newFavorite.FontSize = btnFavoriteBase.FontSize;
+            newFavorite.FontStyle = btnFavoriteBase.FontStyle;
+            newFavorite.FontWeight = btnFavoriteBase.FontWeight;
 
-            //// the name, used to identify it later
-            //newFavorite.Name = "fave" + faveCount;
+            newFavorite.Margin = btnFavoriteBase.Margin;
+            newFavorite.Margin = new Thickness(
+                btnFavoriteBase.Margin.Left,
+                btnFavoriteBase.Margin.Top + (faveCount * (newFavorite.Height + separation)),
+                btnFavoriteBase.Margin.Right,
+                btnFavoriteBase.Margin.Bottom - (faveCount * (newFavorite.Height + separation)));
+            newFavorite.Click += FavoriteClick;
+            newFavorite.Visibility = Visibility.Visible;
 
-            //// style of the size
-            //newFavorite.Height = btnFavoriteBase.Height;
-            //newFavorite.Width = btnFavoriteBase.Width;
-            //newFavorite.Style = btnFavoriteBase.Style;
-
-            //// the font
-            //newFavorite.FontFamily = btnFavoriteBase.FontFamily;
-            //newFavorite.FontSize = btnFavoriteBase.FontSize;
-            //newFavorite.FontStyle = btnFavoriteBase.FontStyle;
-            //newFavorite.FontWeight = btnFavoriteBase.FontWeight;
-
-            //newFavorite.Margin = btnFavoriteBase.Margin;
-            //newFavorite.Margin = new Thickness(
-            //btnFavoriteBase.Margin.Left,
-            //    btnFavoriteBase.Margin.Top + (faveCount * (newFavorite.Height + separation)),
-            //    btnFavoriteBase.Margin.Right,
-            //    btnFavoriteBase.Margin.Bottom - (faveCount * (newFavorite.Height + separation)));
-            //newFavorite.Click += FavoriteClick;
-            //newFavorite.Visibility = Visibility.Visible;
-
-            //// increment our favorite count!
-            //faveCount++;
+            // increment our favorite count!
+            faveCount++;
         }
 
         // navigate to the appropriate url when they click favorite!
         private void FavoriteClick(object sender, RoutedEventArgs e)
         {
-
-      
- 
             String url = ((Button)sender).Tag.ToString();
             wvMain.Navigate(new Uri(url));
             tbSearch.Text = url;
             wvMain.Visibility = Visibility.Visible;
             btnFavorite.Content = "♥︎";
             tblWelcome.Visibility = Visibility.Collapsed;
-
-         
-            display = all.FirstOrDefault(m => m.Title == ((Button)sender).Content);
         }
         private void btnFavorite_Click(object sender, RoutedEventArgs e)
         {
- 
-          
-
-            // add current movie into fav: if wv is in display
-            if (wvMain.Visibility == Visibility.Visible && display != null && (string) btnFavorite.Content == "♡")
-            {
-
-                CreateNewFavorite(display.Title, urls[display.Title]); // create the new button
-                btnFavorite.Content = "♥︎";
-                RefreshFavs();
-            } else if (wvMain.Visibility == Visibility.Visible && display != null && (string)btnFavorite.Content == "♥︎")
-            {
-                favs.Remove(display.Title);
-                btnFavorite.Content = "♡";
-                RefreshFavs();
-            }
-
+            // reset the favorite textbox to it's default state
+            tbFavorite.Text = "<Enter A New Favorite>";
+            tbFavorite.Visibility = Visibility.Visible;
+            tbFavorite.SelectAll();
+            tbFavorite.Focus(FocusState.Programmatic);
         }
         /*private void btnFavoriteRemove_Click(object sender, RoutedEventArgs e)
         {
@@ -579,8 +354,7 @@ namespace StudioGhibliApp
 
     public async Task<List<Movie>> GetMoviesAsync()
     {
-            // test url https://www.themoviedb.org/t/p/original/tcrkfB8SRPQCgwI88hQScua6nxh.jpg
-            var response = await client.GetStringAsync("https://ghibliapi.dev/films");
+        var response = await client.GetStringAsync("https://ghibliapi.dev/films");
         var movies = JsonSerializer.Deserialize<List<Movie>>(response);
         return movies;
     }
