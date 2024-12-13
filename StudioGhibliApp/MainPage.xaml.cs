@@ -5,13 +5,22 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Windows.Input;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Text.Json.Serialization;
+using System.Xml.Linq;
+using Windows.Storage;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -27,9 +36,13 @@ namespace StudioGhibliApp
         private int faveCount;
         private String stringUrl;
 
+        private static readonly HttpClient client = new HttpClient();
+
         public MainPage()
         {
             this.InitializeComponent();
+
+             LoadMoviesAsync();
 
             // initialization code
             btnFavoriteBase.Visibility = Visibility.Collapsed;
@@ -39,6 +52,20 @@ namespace StudioGhibliApp
             tbFavoriteRemove.Visibility = Visibility.Collapsed;
             /*btnFavoriteRemove.Visibility = Visibility.Collapsed;
             btnFavoriteRemove.Visibility = Visibility.Collapsed;*/
+
+            // init
+            CreateNewFavorite("my-neighbor-totoro", "https://www.ghiblicollection.com/products/my-neighbor-totoro");
+            CreateNewFavorite("ponyo", "https://www.ghiblicollection.com/products/ponyo-1");
+        }
+
+
+        private async Task LoadMoviesAsync()
+        {
+            var response = await client.GetStringAsync("https://ghibliapi.dev/films");
+            var movies = JsonSerializer.Deserialize<List<Movie>>(response);
+            MovieGrid.ItemsSource = movies; // Binding the data to the grid
+        
+
         }
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
@@ -76,7 +103,36 @@ namespace StudioGhibliApp
                 dialog.ShowAsync();
             }
         }
+        private void MovieGrid_ItemClick(object sender, ItemClickEventArgs e)
+            {
+                if (e.ClickedItem is Movie clickedMovie)
+                {
+                    // Handle the click event, e.g., toggle state or show details
+                    clickedMovie.IsSelected = !clickedMovie.IsSelected;
 
+                    // Log or update the UI
+                    Debug.WriteLine($"Movie clicked: {clickedMovie.Title}, Selected: {clickedMovie.IsSelected}");
+                }
+            }
+
+
+        private void tbSearch_Return(object sender, KeyRoutedEventArgs e)
+        {
+            // if the user hits enter on the favorite textbox, add a favorite button!
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                // only let the user add a favorite button if it's not the default text
+                // TODO add checks on what they typed, so I at least THINK its a valid url...?
+                String text = tbSearch.Text.Trim();
+                if (text.Length > 0 && text != "Search...")
+                {
+                    tblWelcome.Visibility = Visibility.Collapsed;
+                    string url = "https://ghiblicollection.com/search?options%5Bprefix%5D=last&type=product&q=" + text;
+                    wvMain.Navigate(new Uri(url));
+                    wvMain.Visibility = Visibility.Visible;
+                }
+            }
+        }
         
 
         private void tbFavorite_KeyUp(object sender, KeyRoutedEventArgs e)
@@ -281,6 +337,8 @@ namespace StudioGhibliApp
         {
 
         }
+ 
+
 
         private void tbSearch_SelectionChanged(object sender, RoutedEventArgs e)
         {
@@ -293,6 +351,25 @@ namespace StudioGhibliApp
         }*/
     }
 
-   
+    internal class MovieService
+    {
+            private static readonly HttpClient client = new HttpClient();
+
+    public async Task<List<Movie>> GetMoviesAsync()
+        {
+
+        StorageFile jsonFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Data/data.json"));
+
+        // Read the file as a string
+        string jsonText = await FileIO.ReadTextAsync(jsonFile);
+
+        // Optionally, you can deserialize the JSON into an object
+      //  var jsonData = JsonConvert.DeserializeObject<MyData>(jsonText);
     
+        // var response = await client.GetStringAsync("https://ghibliapi.dev/films");
+        var movies = JsonSerializer.Deserialize<List<Movie>>(jsonText);
+        return movies;
+    }
+    
+    }
 }
